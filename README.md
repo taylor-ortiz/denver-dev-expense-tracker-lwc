@@ -21,4 +21,5 @@ Inflation and its effects have you in a tizzy! You recently got a higher than no
 - Once we have created the Budget__c record, we can go ahead and create some Expense records in the UI under the Budget__c record you just created so we have something show up in the list view when we load the component on the Home page
 
 
-
+## Here is what we will be building
+![Screenshot 2024-10-18 at 4 40 55 PM](https://github.com/user-attachments/assets/9617c0f8-0351-489b-ad9f-ad79bdd23d91)
