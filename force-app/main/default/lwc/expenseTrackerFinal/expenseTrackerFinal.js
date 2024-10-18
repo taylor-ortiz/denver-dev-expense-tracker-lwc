@@ -1,19 +1,120 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
+import { deleteRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getCurrentMonthBudget from '@salesforce/apex/ExpenseTrackerController.getCurrentMonthBudget';
+import getExpenses from '@salesforce/apex/ExpenseTrackerController.getExpenses';
+import EXPENSE_OBJECT from "@salesforce/schema/Expense__c";
+import EXPENSE_NAME from "@salesforce/schema/Expense__c.Name";
+import EXPENSE_AMOUNT from "@salesforce/schema/Expense__c.Amount__c";
+import EXPENSE_DATE from "@salesforce/schema/Expense__c.Transaction_Date__c";
+import EXPENSE_CATEGORY from "@salesforce/schema/Expense__c.Transaction_Category__c";
+
+const actions = [
+    { label: 'Delete', name: 'delete' },
+];
+
+const columns = [
+    { label: 'Name', fieldName: 'Name' },
+    { label: 'Amount', fieldName: 'Amount__c', type: 'currency' },
+    { label: 'Date', fieldName: 'Transaction_Date__c', type: 'date' },
+    { label: 'Category', fieldName: 'Transaction_Category__c', type: 'picklist' },
+    {
+        type: 'action',
+        typeAttributes: { rowActions: actions },
+    },
+];
 
 export default class ExpenseTracker extends LightningElement {
+
+    expenseObject = EXPENSE_OBJECT;
+    expenseName = EXPENSE_NAME;
+    expenseAmount = EXPENSE_AMOUNT;
+    expenseDate = EXPENSE_DATE;
+    expenseCategory = EXPENSE_CATEGORY;
+
+    expenseFields = [EXPENSE_NAME, EXPENSE_AMOUNT, EXPENSE_DATE, EXPENSE_CATEGORY]
+
     @track selectedMonth = this.getCurrentMonth();
-    @track expenses = [
-        { id: 1, amount: 100, date: '2024-01-15', category: 'Food', month: 'January' },
-        { id: 2, amount: 200, date: '2024-02-10', category: 'Transport', month: 'February' },
-        // Add more expenses as needed
-    ];
+    @track expenses = [];
+
+    @track columns = columns;
     @track expenseAmount = 0;
     @track expenseDate = '';
     @track expenseCategory = '';
+    @track totalExpensesAmount;
+    @track budgetId;
+    @track wiredBudgetResult;
+    @track wiredExpensesResult;
+    currentMonth = 'October'
 
-    get formattedAmount() {
-        return `Total Spent: $${this.getTotalSpent()}`;
+    @wire(getCurrentMonthBudget, { selectedMonth: '$selectedMonth' })
+    wiredBudget(result) {
+        console.log(result.data)
+        this.wiredBudgetResult = result;
+        if (result.data) {
+            console.log('what is result data? ', result.data)
+            if (result.data.length > 0) {
+                this.totalExpensesAmount = result.data[0].Total__c;
+                this.budgetId = result.data[0].Id;
+            } else {
+                this.totalExpensesAmount = 0;
+                this.budgetId = '';
+            }
+        } else if (result.error) {
+            // Handle errors
+            console.log('show error: ', result.error)
+        }
     }
+
+    @wire(getExpenses, {budgetId: '$budgetId'})
+    wiredExpenses(result) {
+        this.wiredExpensesResult = result;
+        if (result.data) {
+            this.expenses = result.data;
+        } else if (result.error) {
+            // Handle errors
+            console.log('show error: ', result.error)
+        }
+    }
+
+    async handleExpenseCreated(event) {
+        console.log(event.detail)
+
+        const inputFields = this.template.querySelectorAll("lightning-input-field");
+        if (inputFields) {
+            inputFields.forEach((field) => {
+                field.reset();
+            });
+        }
+        // Refresh the roll-up summary after record is created successfully
+        await refreshApex(this.wiredBudgetResult);
+        await refreshApex(this.wiredExpensesResult);
+    }
+
+    async handleRowAction(event) {
+        const actionName = event.detail.action.name;
+        console.log('what is action name? ', actionName)
+        const row = event.detail.row;
+        console.log('what is row? ', row.Id)
+
+        try {
+            await deleteRecord(row.Id);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'Expense deleted',
+                    variant: 'success'
+                })
+            );
+            await refreshApex(this.wiredBudgetResult);
+            await refreshApex(this.wiredExpensesResult);
+
+        } catch (error) {
+            
+        }
+    }
+
 
     get monthOptions() {
         return [
@@ -32,46 +133,21 @@ export default class ExpenseTracker extends LightningElement {
         ];
     }
 
-    get categoryOptions() {
-        return [
-            { label: 'Food', value: 'Food' },
-            { label: 'Transport', value: 'Transport' },
-            { label: 'Entertainment', value: 'Entertainment' },
-            // Add more categories as needed
-        ];
+
+    get getTotalExpensesAmount() {
+        return this.totalExpensesAmount;
     }
 
-    get filteredExpenses() {
-        return this.expenses.filter(expense => expense.month === this.selectedMonth);
+    get getBudgetId() {
+        return this.budgetId;
+    }
+
+    get getExpenses() {
+        return this.expenses;
     }
 
     handleMonthChange(event) {
         this.selectedMonth = event.detail.value;
-    }
-
-    handleExpenseAmountChange(event) {
-        this.expenseAmount = event.target.value;
-    }
-
-    handleExpenseDateChange(event) {
-        this.expenseDate = event.target.value;
-    }
-
-    handleExpenseCategoryChange(event) {
-        this.expenseCategory = event.detail.value;
-    }
-
-    handleAddExpense() {
-        // Logic to add the expense
-        const newExpense = {
-            id: this.expenses.length + 1,
-            amount: this.expenseAmount,
-            date: this.expenseDate,
-            category: this.expenseCategory,
-            month: this.getMonthFromDate(this.expenseDate)
-        };
-        this.expenses = [...this.expenses, newExpense];
-        this.clearExpenseForm();
     }
 
     getCurrentMonth() {
@@ -81,24 +157,5 @@ export default class ExpenseTracker extends LightningElement {
             'July', 'August', 'September', 'October', 'November', 'December'
         ];
         return monthNames[date.getMonth()];
-    }
-
-    getMonthFromDate(date) {
-        const monthNames = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ];
-        const monthIndex = new Date(date).getMonth();
-        return monthNames[monthIndex];
-    }
-
-    getTotalSpent() {
-        return this.filteredExpenses.reduce((total, expense) => total + expense.amount, 0);
-    }
-
-    clearExpenseForm() {
-        this.expenseAmount = 0;
-        this.expenseDate = '';
-        this.expenseCategory = '';
     }
 }
