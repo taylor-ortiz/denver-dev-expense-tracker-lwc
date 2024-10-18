@@ -1,3 +1,72 @@
 <template>
-    
+    <lightning-card title="Expense Tracker">
+        <lightning-layout multiple-rows="true">
+            <!-- Month Selector -->
+            <lightning-layout-item size="12">
+                <lightning-layout>
+                    <lightning-layout-item padding="around-small" size="4">
+                        <div>
+                            <lightning-combobox
+                                name="monthFilter"
+                                label="Select Month"
+                                value={selectedMonth}
+                                placeholder="Select Month"
+                                options={monthOptions}
+                                onchange={handleMonthChange}>
+                            </lightning-combobox>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            
+            <!-- Total Amount Display -->
+            <lightning-layout-item size="12">
+                <lightning-layout horizontal-align="center">
+                    <lightning-layout-item padding="around-small" size="auto">
+                        <div class="amount-display">
+                            Total Spent: <b>$1000</b>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            
+            <!-- Add Expense Form -->
+            <lightning-layout-item size="12">
+                <lightning-layout horizontal-align="left" class="align-center">
+                    <lightning-layout-item padding="around-small" size="auto">
+                        <div>
+                            <lightning-input type="number" name="expenseAmount" label="Enter an amount:" onchange={handleExpenseAmountChange}></lightning-input>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="auto">
+                        <div>
+                            <lightning-input type="date" name="expenseDate" label="Select a date:" onchange={handleExpenseDateChange}></lightning-input>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="auto">
+                        <div>
+                            <lightning-combobox
+                                name="expenseCategory"
+                                label="Select Category"
+                                placeholder="Select Category"
+                                options={categoryOptions}
+                                onchange={handleExpenseCategoryChange}>
+                            </lightning-combobox>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            
+            <!-- Add Expense Button -->
+            <lightning-layout-item size="12">
+                <lightning-layout horizontal-align="start">
+                    <lightning-layout-item size="auto" class="slds-p-left_small">
+                        <div aria-label="hidden">
+                            <lightning-button label="Add Expense" onclick={handleAddExpense}></lightning-button>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
 </template>
