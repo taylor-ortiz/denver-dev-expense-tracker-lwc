@@ -22,4 +22,5 @@ Inflation and its effects have you in a tizzy! You recently got a higher than no
 
 
 ## Here is what we will be building
-![Screenshot 2024-10-18 at 4 40 55 PM](https://github.com/user-attachments/assets/9617c0f8-0351-489b-ad9f-ad79bdd23d91)
+
+![Screenshot 2024-10-18 at 4 43 53 PM](https://github.com/user-attachments/assets/f8e41bc5-b78e-4367-9b80-a3e8f49fa503)
