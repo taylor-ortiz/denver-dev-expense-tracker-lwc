@@ -1,3 +1,58 @@
 <template>
-    
+    <lightning-card title="Expense Tracker">
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12">
+                <lightning-layout>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <div>
+                            <p> -- Insert Combobox here --</p>
+                            <!-- TODO: Add a lightning combobox to hold the monthOptions variable in your JS file.  -->
+                            <!-- TODO: In your lightning combobox, add an onchange event that handles the selection of
+                                a different month that uses the handleMonthChange function in your JS file  -->
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-align_absolute-center">
+                        <!-- TODO: add our css class to give our total spent a larger font size and center alignment  -->
+                        <!-- TODO: make our total spent amount dynamic using the "totalExpensesAmount" variable in our JS file.
+                             Hint: we need to check to make sure it has loaded before we reference it in our HTML.  -->
+                        <div>
+                            Total Spent: <b>$356.67</b>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item size="12">
+                <!-- TODO: Instead of hardcoding the object reference, add expense object import that you added in your JS file here to the object-api-name attribute -->
+                <lightning-record-edit-form object-api-name="Expense__c" onsuccess={handleExpenseCreated}>
+                    <lightning-messages></lightning-messages>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="6" class="slds-var-p-around_small">
+                            <lightning-input-field field-name="Name"></lightning-input-field>
+                            <!-- TODO: Add the Amount__c and Budget__c fields as a lightning-input-field.
+                                Hint: this is similar to how Name is configured here. Remember, we want to consider how we should render Budget__c 
+                                provided that we are retrieving it from the database. There might be an existing getter method you can reference :)  -->
+
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class="slds-p-around_small">
+                            <!-- TODO: Add the Date and Category fields from your expense object here as a lightning-input-field -->
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-button type="submit" variant="brand" label="Create Expense"
+                        class="slds-p-left_medium"></lightning-button>
+                </lightning-record-edit-form>
+            </lightning-layout-item>
+
+            <lightning-layout-item size="12">
+                <lightning-card title="Expenses" class="slds-p-top_small">
+                    <div class="slds-p-around_small">
+                        <template if:true={getExpenses}>
+                            <lightning-datatable key-field="id" data={expenses} columns={columns}
+                                onrowaction={handleRowAction} hide-checkbox-column>
+                            </lightning-datatable>
+                        </template>
+                    </div>
+                </lightning-card>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
 </template>

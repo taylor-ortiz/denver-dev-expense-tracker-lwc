@@ -5,10 +5,6 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getCurrentMonthBudget from '@salesforce/apex/ExpenseTrackerControllerFinal.getCurrentMonthBudget';
 import getExpenses from '@salesforce/apex/ExpenseTrackerControllerFinal.getExpenses';
 import EXPENSE_OBJECT from "@salesforce/schema/Expense__c";
-import EXPENSE_NAME from "@salesforce/schema/Expense__c.Name";
-import EXPENSE_AMOUNT from "@salesforce/schema/Expense__c.Amount__c";
-import EXPENSE_DATE from "@salesforce/schema/Expense__c.Transaction_Date__c";
-import EXPENSE_CATEGORY from "@salesforce/schema/Expense__c.Transaction_Category__c";
 
 const actions = [
     { label: 'Delete', name: 'delete' },
@@ -28,24 +24,18 @@ const columns = [
 export default class ExpenseTracker extends LightningElement {
 
     expenseObject = EXPENSE_OBJECT;
-    expenseName = EXPENSE_NAME;
-    expenseAmount = EXPENSE_AMOUNT;
-    expenseDate = EXPENSE_DATE;
-    expenseCategory = EXPENSE_CATEGORY;
 
-    expenseFields = [EXPENSE_NAME, EXPENSE_AMOUNT, EXPENSE_DATE, EXPENSE_CATEGORY]
+    selectedMonth = this.getCurrentMonth();
+    expenses = [];
 
-    @track selectedMonth = this.getCurrentMonth();
-    @track expenses = [];
-
-    @track columns = columns;
-    @track expenseAmount = 0;
-    @track expenseDate = '';
-    @track expenseCategory = '';
-    @track totalExpensesAmount;
-    @track budgetId;
-    @track wiredBudgetResult;
-    @track wiredExpensesResult;
+    columns = columns;
+    expenseAmount = 0;
+    expenseDate = '';
+    expenseCategory = '';
+    totalExpensesAmount;
+    budgetId;
+    wiredBudgetResult;
+    wiredExpensesResult;
     currentMonth = 'October'
 
     @wire(getCurrentMonthBudget, { selectedMonth: '$selectedMonth' })
@@ -79,7 +69,14 @@ export default class ExpenseTracker extends LightningElement {
     }
 
     async handleExpenseCreated(event) {
-        console.log(event.detail)
+        
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Success',
+                message: 'Expense added',
+                variant: 'success'
+            })
+        );
 
         const inputFields = this.template.querySelectorAll("lightning-input-field");
         if (inputFields) {
