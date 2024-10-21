@@ -18,3 +18,24 @@ Inflation and its effects have you in a tizzy! You recently got a higher than no
 ## Here is what we will be building
 
 ![Screenshot 2024-10-18 at 4 43 53 PM](https://github.com/user-attachments/assets/f8e41bc5-b78e-4367-9b80-a3e8f49fa503)
+
+# Requirements
+
+## 1. Lightning Combobox for Month Selection
+   - Add a lightning combobox that uses the `monthOptions` variable from the JavaScript file.
+   - Add an `onchange` event to the combobox to handle month selection and call the `handleMonthChange` function from the JavaScript file.
+
+## 2. Display and Styling for Total Spent
+   - Add a CSS class to the total spent section to give the amount a larger font size and center alignment.
+   - Make the total spent amount dynamic by using the `totalExpensesAmount` variable from the JavaScript file. Ensure that the value is checked and loaded before referencing it in the HTML.
+
+## 3. Lightning Input Fields for Expense Creation
+   - Add the `Amount__c` and `Budget__c` fields as `lightning-input-field` components, similar to the `Name` field. Ensure consideration of how the `Budget__c` field is rendered, possibly by referencing an existing getter method from the JavaScript file.
+   - Add the `Date` and `Category` fields from the expense object as `lightning-input-field` components.
+
+## 4. Expense Object Import and Reference
+   - Import the expense object using the `@salesforce/schema/` module in the JavaScript file. This will be used in the record-edit-form in the HTML template.
+   - Add a reference to the imported expense object in the JavaScript class and set the `expenseObject` variable equal to the imported object.
+
+## 5. Expense Object for Record Form
+   - Replace the hardcoded object reference in the `<lightning-record-edit-form>` with the dynamically imported `Expense__c` object from the JavaScript file.
