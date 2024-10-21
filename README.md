@@ -38,4 +38,30 @@ Inflation and its effects have you in a tizzy! You recently got a higher than no
    - Add a reference to the imported expense object in the JavaScript class and set the `expenseObject` variable equal to the imported object.
 
 ## 5. Expense Object for Record Form
-   - Replace the hardcoded object reference in the `<lightning-record-edit-form>` with the dynamically imported `Expense__c` object from the JavaScript file.
+   - Now that you have imported the expense object in your JS file, replace the hardcoded object reference in the `<lightning-record-edit-form>` with the dynamically imported `Expense__c` object from the JavaScript file.
+
+## 6. Apex: Query for Expenses Based on Budget ID
+   - Write a SOQL query that retrieves all expenses related to the given `budgetId` and orders them by `Transaction_Date__c` in ascending order.
+
+## 7. Set response data from Apex expenses query to expense array
+    - TODO: set your response data to the expenses array at the top of the JS file
+
+## 8. Wiring Data and Refreshing Apex
+   - In the `wiredExpenses` function, store the result data so that it can be used for refreshing Apex when new expenses are added.
+     - **Hint**: There is already a pattern in the file for storing results (see `wiredBudget`).
+
+## 9. Handling Expense Creation
+   - Create a toast event to notify the user when a new expense has been successfully created.
+     - **Hint**: You can reference the `ShowToastEvent` example in the `handleRowAction` method.
+   - After successfully creating an expense, refresh the `expenses` array to show the updated data.
+
+## 10. Get row ID of the deleted record from the event
+    - TODO: Get the row ID of the deleted record from the event.
+
+## 11. Handling Row Action for Deleting Expense
+   - In the `handleRowAction` method, get the row ID of the record that needs to be deleted from the event details.
+   - Use the `deleteRecord()` method to delete the expense record based on the row ID.
+   - After successfully deleting the record, refresh the `expenses` array to reflect the updated data.
+
+## 12. Bug!
+   -  When switching to a month with no expenses, the totalExpensesAmount variable is not showing 0. What could be causing this?
