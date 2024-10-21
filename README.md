@@ -15,7 +15,7 @@ Inflation and its effects have you in a tizzy! You recently got a higher than no
 1. **Create some test records:** Now let's create a budget for October and some test records. You can go to the Expense Tracker app and create them yourself, or import our example data using the following command.
     - ```sf data import tree --files Budget__c-Expense__c.json```
 
-## Here is what we will be building
+# Here is what we will be building
 
 ![Screenshot 2024-10-18 at 4 43 53 PM](https://github.com/user-attachments/assets/f8e41bc5-b78e-4367-9b80-a3e8f49fa503)
 
@@ -44,7 +44,7 @@ Inflation and its effects have you in a tizzy! You recently got a higher than no
 - Write a SOQL query that retrieves all expenses related to the given `budgetId` and orders them by `Transaction_Date__c` in ascending order.
 
 ## 7. Set response data from Apex expenses query to expense array
-- TODO: set your response data to the expenses array at the top of the JS file
+- set your response data to the expenses array at the top of the JS file
 
 ## 8. Wiring Data and Refreshing Apex
 - In the `wiredExpenses` function, store the result data so that it can be used for refreshing Apex when new expenses are added.
@@ -56,7 +56,7 @@ Inflation and its effects have you in a tizzy! You recently got a higher than no
 - After successfully creating an expense, refresh the `expenses` array to show the updated data.
 
 ## 10. Get row ID of the deleted record from the event
-- TODO: Get the row ID of the deleted record from the event.
+- Get the row ID of the deleted record from the event.
 
 ## 11. Handling Row Action for Deleting Expense
 - In the `handleRowAction` method, get the row ID of the record that needs to be deleted from the event details.
