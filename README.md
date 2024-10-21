@@ -2,7 +2,7 @@
 
 Inflation and its effects have you in a tizzy! You recently got a higher than normal water bill and you screamed at the mail man. You think to yourself that you wish you had a way to track your expenses so that you can create more visibility into what you are spending. Being proficient in Salesforce as a developer, you decide to build an expense tracker Lightning Web Component that allows you to enter and track your expenses. 
 
-## Setup Steps
+# Setup Steps
 1. **Clone the Repo:** Clone the repository from github by using git clone or downloading the zip file
     - Open the terminal and go to a folder you want to store code in and run the following command: ```git clone https://github.com/taylor-ortiz/denver-dev-expense-tracker-lwc.git```
     - If you do not have github and do not have git -> download this zip file "[denver-dev-expense-tracker-lwc.zip](https://github.com/taylor-ortiz/denver-dev-expense-tracker-lwc/raw/refs/heads/main/denver-dev-expense-tracker-lwc.zip)" and extract the contents.
