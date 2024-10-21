@@ -1,0 +1,46 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Budget__c",
+                "referenceId": "Budget__cRef1"
+            },
+            "Name": "October Budget",
+            "Month__c": "October",
+            "Expenses__r": {
+                "records": [
+                    {
+                        "attributes": {
+                            "type": "Expense__c",
+                            "referenceId": "Expense__cRef1"
+                        },
+                        "Amount__c": 85.44,
+                        "Name": "Halloween costume",
+                        "Transaction_Category__c": "Shopping",
+                        "Transaction_Date__c": "2024-10-19"
+                    },
+                    {
+                        "attributes": {
+                            "type": "Expense__c",
+                            "referenceId": "Expense__cRef2"
+                        },
+                        "Amount__c": 43.22,
+                        "Name": "Halloween candy",
+                        "Transaction_Category__c": "Groceries",
+                        "Transaction_Date__c": "2024-10-21"
+                    },
+                    {
+                        "attributes": {
+                            "type": "Expense__c",
+                            "referenceId": "Expense__cRef3"
+                        },
+                        "Amount__c": 5.5,
+                        "Name": "RTD Day Pass",
+                        "Transaction_Category__c": "Vehicle",
+                        "Transaction_Date__c": "2024-10-22"
+                    }
+                ]
+            }
+        }
+    ]
+}
