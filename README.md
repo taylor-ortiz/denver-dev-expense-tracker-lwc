@@ -3,23 +3,17 @@
 Inflation and its effects have you in a tizzy! You recently got a higher than normal water bill and you screamed at the mail man. You think to yourself that you wish you had a way to track your expenses so that you can create more visibility into what you are spending. Being proficient in Salesforce as a developer, you decide to build an expense tracker Lightning Web Component that allows you to enter and track your expenses. 
 
 ## Setup Steps
-- If you are planning on cloning the repo from Github -> Clone the repository from github into VS Code using the following command in your terminal
-    - git clone https://github.com/taylor-ortiz/denver-dev-expense-tracker-lwc.git
-- If you do not have github and do not have git -> Find the file in the public github repo called "denver-dev-expense-tracker-lwc"
-    - Click on it
-    - Select "View Raw" (this should auto download it)
-    - Open this folder in VS Code
-- If you have not already "Authorized an Org" in your VS Code environment, please do so
-- Once authorized, navigate to force-app/main/default, right click, and select "SFDX: Deploy This Source To Org"
-- We will do a cursory look here to make sure everything made it in okay
-- Once confirmed, lets use either the UI in Salesforce or the CLI to create a Budget__c record
-    - If creating in the UI, navigate in the 'Expense Tracker' app to the Budget tab, select New and fill in the following attributes:
-        - Name: 'October Budget'
-        - Month: 'October'
-    - If creating using the CLI, just navigate to your terminal and run the following command:
-        - sfdx force:data:record:create -s Budget__c -v "Name='October Budget' Month__c='October'" --json
-- Once we have created the Budget__c record, we can go ahead and create some Expense records in the UI under the Budget__c record you just created so we have something show up in the list view when we load the component on the Home page
-
+1. **Clone the Repo:** Clone the repository from github by using git clone or downloading the zip file
+    - Open the terminal and go to a folder you want to store code in and run the following command: ```git clone https://github.com/taylor-ortiz/denver-dev-expense-tracker-lwc.git```
+    - If you do not have github and do not have git -> download this zip file "[denver-dev-expense-tracker-lwc.zip](https://github.com/taylor-ortiz/denver-dev-expense-tracker-lwc/raw/refs/heads/main/denver-dev-expense-tracker-lwc.zip)" and extract the contents.
+    - Then, regardless of the method you used, open the denver-dev-expense-tracker-lwc folder in VS Code.
+1. **Authorize your dev org:** If you have not already "Authorized an Org" in your VS Code environment, click "No Default Org Set" in the VS Code Status bar (bottom bar) and authorize your dev org.
+    - If you don't have a dev org, you can create a scratch org by running ```sf org create scratch -d -f config/project-scratch-def.json -a expense-tracker-lwc```
+1. **Deploy the repo:** Once authorized, navigate to force-app/main/default, right click, and select "SFDX: Deploy This Source To Org"
+1. **Assign the Expense Tracker permissions:** Give your user the Expense Tracker permission set via setup or by running the following command:
+    - ```sf org assign permset --name Expense_Tracker```
+1. **Create some test records:** Now let's create a budget for October and some test records. You can go to the Expense Tracker app and create them yourself, or import our example data using the following command.
+    - ```sf data import tree --files Budget__c-Expense__c.json```
 
 ## Here is what we will be building
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
@@ -57,7 +58,12 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Amount__c</fields>
+        <fields>Transaction_Date__c</fields>
+        <fields>Transaction_Category__c</fields>
         <relatedList>Expense__c.Budget__c</relatedList>
+        <sortField>Transaction_Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

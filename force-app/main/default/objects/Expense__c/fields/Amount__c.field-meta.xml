@@ -4,7 +4,7 @@
     <label>Amount</label>
     <precision>18</precision>
     <required>true</required>
-    <scale>0</scale>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
     <type>Currency</type>
 </CustomField>
