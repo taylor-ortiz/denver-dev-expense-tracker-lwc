@@ -50,8 +50,10 @@ export default class ExpenseTrackerFinal extends LightningElement {
                 this.totalExpensesAmount = result.data[0].Total__c;
                 this.budgetId = result.data[0].Id;
             } else {
-                this.totalExpensesAmount = 0;
+                this.totalExpensesAmount = 0.00;
                 this.budgetId = '';
+
+                // TODO: there is a bug with setting totalExpensesAmount to 0 and it not showing up in the UI if result data is not detected. can you figure out why?
             }
         } else if (result.error) {
             console.log('show error: ', result.error)
@@ -60,9 +62,10 @@ export default class ExpenseTrackerFinal extends LightningElement {
 
     @wire(getExpenses, {budgetId: '$budgetId'})
     wiredExpenses(result) {
-        this.wiredExpensesResult = result;
+        // TODO: warning, this is more challenging. you need to store your result so that you can utilize refresh apex when new expenses are added in the interface.
+        // Hint: there is already a pattern for you to reference and copy in this file. Look closely :)
         if (result.data) {
-            this.expenses = result.data;
+            // TODO: set your response data to the expenses array at the top
         } else if (result.error) {
             console.log('show error: ', result.error)
         }
@@ -73,7 +76,7 @@ export default class ExpenseTrackerFinal extends LightningElement {
 
         // TODO: create a toast event that will notify when a an expense has been successfully created.
         // Hint: there is an example of a toast event that you can use in the handleRowAction function.
-        
+
 
         const inputFields = this.template.querySelectorAll("lightning-input-field");
         if (inputFields) {
@@ -83,17 +86,19 @@ export default class ExpenseTrackerFinal extends LightningElement {
         }
         // Refresh the roll-up summary after record is created successfully
         await refreshApex(this.wiredBudgetResult);
-        await refreshApex(this.wiredExpensesResult);
+        // TODO: refresh the expenses array after a new expense has been added
     }
 
     async handleRowAction(event) {
         const actionName = event.detail.action.name;
         console.log('what is action name? ', actionName)
+
+        // TODO: get the row Id of the deleted record from the event
         const row = event.detail.row;
         console.log('what is row? ', row.Id)
 
         try {
-            await deleteRecord(row.Id);
+            // TODO: use the deleteRecord() imported module above using the row Id to delete the record
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Success',
@@ -102,7 +107,7 @@ export default class ExpenseTrackerFinal extends LightningElement {
                 })
             );
             await refreshApex(this.wiredBudgetResult);
-            await refreshApex(this.wiredExpensesResult);
+            // TODO: refresh the expenses array after a new expense has been added
 
         } catch (error) {
             

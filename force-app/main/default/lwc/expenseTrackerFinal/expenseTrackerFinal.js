@@ -42,13 +42,15 @@ export default class ExpenseTracker extends LightningElement {
     wiredBudget(result) {
         console.log(result.data)
         this.wiredBudgetResult = result;
+        console.log('what is result? ', result)
         if (result.data) {
             console.log('what is result data? ', result.data)
             if (result.data.length > 0) {
                 this.totalExpensesAmount = result.data[0].Total__c;
                 this.budgetId = result.data[0].Id;
             } else {
-                this.totalExpensesAmount = 0;
+                console.log('getting in here')
+                this.totalExpensesAmount = 0.00;
                 this.budgetId = '';
             }
         } else if (result.error) {
@@ -132,7 +134,7 @@ export default class ExpenseTracker extends LightningElement {
 
 
     get getTotalExpensesAmount() {
-        return this.totalExpensesAmount;
+        return this.totalExpensesAmount !== undefined;
     }
 
     get getBudgetId() {

@@ -12,7 +12,8 @@ public with sharing class ExpenseTrackerController {
     @AuraEnabled (cacheable=true)
     public static List<Expense__c> getExpenses(String budgetId){
         try {
-            return [SELECT Name, Amount__c, Transaction_Date__c, Transaction_Category__c FROM Expense__c WHERE Budget__c =: budgetId ];
+            // TODO: write a query that pulls all of your expenses for a given month and orders them by Transaction Date ASC
+            return null;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
