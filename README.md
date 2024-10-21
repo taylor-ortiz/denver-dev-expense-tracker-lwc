@@ -10,6 +10,8 @@ Inflation and its effects have you in a tizzy! You recently got a higher than no
 1. **Authorize your dev org:** If you have not already "Authorized an Org" in your VS Code environment, click "No Default Org Set" in the VS Code Status bar (bottom bar) and authorize your dev org.
     - If you don't have a dev org, you can create a scratch org by running ```sf org create scratch -d -f config/project-scratch-def.json -a expense-tracker-lwc```
 1. **Deploy the repo:** Once authorized, navigate to force-app/main/default, right click, and select "SFDX: Deploy This Source To Org"
+1. **Assign the Expense Tracker permissions:** Give your user the Expense Tracker permission set via setup or by running the following command:
+    - ```sf org assign permset --name Expense_Tracker```
 1. **Create some test records:** Now let's create a budget for October and some test records. You can go to the Expense Tracker app and create them yourself, or import our example data using the following command.
     - ```sf data import tree --files Budget__c-Expense__c.json```
 
