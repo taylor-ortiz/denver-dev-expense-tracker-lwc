@@ -93,4 +93,4 @@ Which type of event propagation in LWC allows the event to bubble up through par
 - B. Non-Bubbling Events
 - C. Bubbling Events
 
-- Quiz answers are in the quiz_answers.md file in the repo
+Quiz answers are in the quiz_answers.md file in the repo
