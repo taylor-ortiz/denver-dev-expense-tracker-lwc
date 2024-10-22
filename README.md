@@ -68,3 +68,28 @@ Inflation and its effects have you in a tizzy! You recently got a higher than no
 
 ## 13. Bug!
 -  When switching to a month with no expenses, the totalExpensesAmount variable is not showing 0. What could be causing this?
+
+# Quiz Questions
+
+## **Question 1:**
+What are the three main files that make up a Lightning Web Component's anatomy?
+- A. Component.js, Component.html, Component.xml
+- B. Component.js, Component.html, Component.js-meta.xml
+- C. Component.js, Component.html, Component.css
+
+---
+
+## **Question 2:**
+In Lightning Web Components, what is the primary purpose of the `@api` decorator?
+- A. To make a field reactive.
+- B. To make a property public.
+- C. To wire data from an external source.
+
+---
+
+## **Question 3:**
+Which type of event propagation in LWC allows the event to bubble up through parent components until it reaches the DOM?
+- A. Capturing Events
+- B. Non-Bubbling Events
+- C. Bubbling Events
+
